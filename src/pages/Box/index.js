@@ -26,6 +26,12 @@ export default class Box extends Component {
     const io = socket("https://dropbox-omnistack.herokuapp.com");
 
     io.emit("connectRoom", box);
+
+    io.on("file", data => {
+      this.setState({
+        box: { ...this.state.box, files: [data, ...this.state.box.files] }
+      });
+    });
   };
   handleUpload = files => {
     files.forEach(file => {
